@@ -2,7 +2,7 @@ const { Unauthorized } = require("../errors");
 const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
-  const authHeaders = req.headers.Authorization;
+  const authHeaders = req.headers.authorization;
   if (!authHeaders || !authHeaders.startsWith("Bearer ")) {
     throw new Unauthorized("Access denied");
   }
