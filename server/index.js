@@ -9,6 +9,8 @@ const pool = require("./config/connectDB");
 const errorHandler = require("./middleware/errorHandler");
 const routeNotFound = require("./middleware/notFound");
 
+const authRouter = require("./routes/authRoutes");
+
 const port = process.env.PORT || 3000;
 
 //middleware
@@ -25,6 +27,8 @@ app.use(
 );
 
 //routes
+app.use("/api/v1/auth", authRouter);
+
 //errors
 app.use(routeNotFound);
 app.use(errorHandler);
