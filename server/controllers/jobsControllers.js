@@ -1,5 +1,5 @@
 const pool = require("../config/connectDB");
-const { BadRequest, Forbidden } = require("../errors");
+const { BadRequest, Forbidden, NotFound } = require("../errors");
 
 //create job
 const createJob = async (req, res) => {
@@ -83,7 +83,7 @@ const updateJob = async (req, res) => {
   const id = req.params.id;
   const exsitingJob = await pool.query("select * from jobs where id=$1", [id]);
   if (exsitingJob.rows.length < 1) {
-    throw new BadRequest("Job not found");
+    throw new NotFound("Job not found");
   }
   const job = exsitingJob.rows[0];
   if (job.poster_id !== req.user.id) {
@@ -111,13 +111,13 @@ const deleteJob = async (req, res) => {
   const job = await pool.query("select * from jobs where id=$1", [id]);
 
   if (job.rows.length < 1) {
-    throw new BadRequest("Job does not exist");
+    throw new NotFound("Job does not exist");
   }
   if (job.rows[0].poster_id !== req.user.id) {
-    throw new Forbidden("You can only update your own jobs");
+    throw new Forbidden("You can only delete your own jobs");
   }
   await pool.query("delete  from jobs where id=$1 ", [id]);
-  res.status(200).json({ msg: "Jobe deleted successfully" });
+  res.status(200).json({ msg: "Job deleted successfully" });
 };
 
 module.exports = { createJob, getAllJobs, updateJob, deleteJob };
