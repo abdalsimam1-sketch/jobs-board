@@ -10,6 +10,7 @@ const errorHandler = require("./middleware/errorHandler");
 const routeNotFound = require("./middleware/notFound");
 
 const authRouter = require("./routes/authRoutes");
+const jobsRouter = require("./routes/jobsRoutes");
 
 const port = process.env.PORT || 3000;
 
@@ -28,6 +29,7 @@ app.use(
 
 //routes
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/jobs", jobsRouter);
 
 //errors
 app.use(routeNotFound);
