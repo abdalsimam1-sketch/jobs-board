@@ -10,6 +10,7 @@ const testConnection = async () => {
     console.log("Database Connected : ", res.rows[0].now);
   } catch (error) {
     console.error("Database connection error : ", error);
+    process.exit(1);
   }
 };
 

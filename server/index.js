@@ -1,4 +1,7 @@
 require("dotenv/config");
+const validateEnv = require("./util/validateEnv");
+validateEnv();
+
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -11,6 +14,7 @@ const routeNotFound = require("./middleware/notFound");
 
 const authRouter = require("./routes/authRoutes");
 const jobsRouter = require("./routes/jobsRoutes");
+const appsRouter = require("./routes/appsRoutes");
 
 const port = process.env.PORT || 3000;
 
@@ -30,6 +34,7 @@ app.use(
 //routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/apps", appsRouter);
 
 //errors
 app.use(routeNotFound);
