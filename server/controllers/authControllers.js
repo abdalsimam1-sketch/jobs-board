@@ -33,7 +33,11 @@ const register = async (req, res) => {
     expiresIn: process.env.JWT_LIFETIME,
   });
 
-  res.status(201).json({ msg: "User created successfully", token });
+  res.status(201).json({
+    msg: "User created successfully",
+    token,
+    user: { id, role },
+  });
 };
 
 const login = async (req, res) => {
@@ -41,7 +45,7 @@ const login = async (req, res) => {
 
   //validate fields
   if (!email || !password) {
-    throw new BadRequest("Invalid credentials");
+    throw new BadRequest("All fields are required");
   }
 
   //check if user exists
@@ -65,7 +69,11 @@ const login = async (req, res) => {
     expiresIn: process.env.JWT_LIFETIME,
   });
 
-  res.status(200).json({ msg: "Login Successful", token });
+  res.status(200).json({
+    msg: "Login Successful",
+    token,
+    user: { id, role },
+  });
 };
 
 module.exports = { register, login };
