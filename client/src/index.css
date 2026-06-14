@@ -1,0 +1,15 @@
+.auth-page {
+  min-height: 100vh;
+}
+
+.auth-card.card {
+  max-width: 500px;
+  width: 95%;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.active-role {
+  background-color: rgb(56, 56, 119) !important;
+}
