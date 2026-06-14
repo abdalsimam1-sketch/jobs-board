@@ -59,12 +59,12 @@ const getAllJobs = async (req, res) => {
     count++;
   }
   if (min_salary) {
-    conditions.push(`min_salary=$${count}`);
+    conditions.push(`min_salary>=$${count}`);
     values.push(min_salary);
     count++;
   }
   if (max_salary) {
-    conditions.push(`max_salary=$${count}`);
+    conditions.push(`max_salary<=$${count}`);
     values.push(max_salary);
     count++;
   }
