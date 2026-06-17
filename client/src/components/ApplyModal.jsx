@@ -1,7 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createApp } from "../services/appServices";
 
-export const ApplyModal = ({ job, onClose, onSubmit }) => {
+export const ApplyModal = ({ job, onClose }) => {
   const [coverLetter, setCoverLetter] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (coverLetter.length < 20) {
+      setError("Cover Letter is too short please add something");
+      return;
+    }
+    try {
+      setLoading(true);
+      const apply = await createApp({
+        job_id: job.id,
+        cover_letter: coverLetter,
+      });
+      onClose();
+    } catch (error) {
+      setError(error.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    setError("");
+  }, [coverLetter]);
 
   return (
     <div className="modal-page d-flex justify-content-center align-items-center position-fixed z-1 ">
@@ -12,12 +38,8 @@ export const ApplyModal = ({ job, onClose, onSubmit }) => {
         </span>
 
         <span className="d-flex flex-column">
-          <span className="d-flex justify-content-between">
-            <h1>{job.title}</h1>
-            <button className="btn btn-secondary  text-nowrap">
-              Apply now
-            </button>
-          </span>
+          <h1>{job.title}</h1>
+
           <span className="fw-bold">
             <>{job.company_name}</> . <>{job.location}</>
           </span>
@@ -42,20 +64,32 @@ export const ApplyModal = ({ job, onClose, onSubmit }) => {
             <label className="form-label fw-bold" htmlFor="cover-letter">
               Cover Letter
             </label>
-            <form onSubmit={onSubmit} className="d-flex flex-column gap-3">
-              <textarea
-                id="cover-letter"
-                className="form-control"
-                rows="5"
-                value={coverLetter}
-                onChange={(e) => setCoverLetter(e.target.value)}
-              ></textarea>
+            <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
+              <div className="d-flex flex-column ">
+                {error && (
+                  <span className="text-danger fw-bold align-self-end">
+                    {error}
+                  </span>
+                )}
+                <textarea
+                  id="cover-letter"
+                  className="form-control"
+                  rows="5"
+                  value={coverLetter}
+                  onChange={(e) => setCoverLetter(e.target.value)}
+                ></textarea>
+              </div>
               <div className="d-flex gap-3 justify-content-end">
-                <button className="btn  btn-danger" onClick={onClose}>
+                <button
+                  className="btn  btn-danger"
+                  type="button"
+                  onClick={onClose}
+                >
                   Cancel
                 </button>
-                <button className="btn btn-secondary ">
-                  Submit Application
+                <button className="btn btn-secondary " disabled={loading}>
+                  {!loading && <span>Submit Application</span>}
+                  {loading && <span className="spinner-border"></span>}
                 </button>
               </div>
             </form>
