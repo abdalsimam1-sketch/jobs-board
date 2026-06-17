@@ -78,7 +78,7 @@ export const ApplyModal = ({ job, onClose }) => {
                 )}
                 <textarea
                   id="cover-letter"
-                  className="form-control"
+                  className={`form-control ${error && "border-danger"}`}
                   rows="5"
                   value={coverLetter}
                   onChange={(e) => setCoverLetter(e.target.value)}
