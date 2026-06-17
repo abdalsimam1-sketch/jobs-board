@@ -2,6 +2,7 @@ import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { Auth } from "./pages/Auth";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
+import { SeekerDashboard } from "./pages/SeekerDashboard";
 
 const App = () => {
   return (
@@ -13,6 +14,14 @@ const App = () => {
           element={
             <ProtectedRoutes>
               <Home></Home>
+            </ProtectedRoutes>
+          }
+        ></Route>
+        <Route
+          path="/seeker-dashboard"
+          element={
+            <ProtectedRoutes>
+              <SeekerDashboard></SeekerDashboard>
             </ProtectedRoutes>
           }
         ></Route>
