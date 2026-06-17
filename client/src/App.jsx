@@ -2,7 +2,6 @@ import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { Auth } from "./pages/Auth";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { SeekerApps } from "./pages/SeekerApps";
 
 const App = () => {
   return (
@@ -14,14 +13,6 @@ const App = () => {
           element={
             <ProtectedRoutes>
               <Home></Home>
-            </ProtectedRoutes>
-          }
-        ></Route>
-        <Route
-          path="/myApps"
-          element={
-            <ProtectedRoutes>
-              <SeekerApps></SeekerApps>
             </ProtectedRoutes>
           }
         ></Route>
