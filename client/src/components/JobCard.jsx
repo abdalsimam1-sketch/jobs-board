@@ -1,3 +1,5 @@
+import { formatSalary } from "../utils/formatSalary";
+
 export const JobCard = ({ job, onClick }) => {
   return (
     <div className="card p-3 h-100 cursor-pointer" onClick={onClick}>
@@ -16,7 +18,8 @@ export const JobCard = ({ job, onClick }) => {
           <span className="text-nowrap">{job.location}</span>
         </span>
         <span>
-          $<>{job.min_salary}</> - <>{job.max_salary} / mo</>
+          ₦<>{formatSalary(job.min_salary)}</> -{" "}
+          <>{formatSalary(job.max_salary)} / mo</>
         </span>
       </div>
       <hr />

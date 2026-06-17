@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { createApp } from "../services/appServices";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+import { formatSalary } from "../utils/formatSalary";
 
 export const ApplyModal = ({ job, onClose }) => {
   const [coverLetter, setCoverLetter] = useState("");
@@ -48,10 +52,11 @@ export const ApplyModal = ({ job, onClose }) => {
               {job.type}
             </span>
             <span className="rounded-pill border py-1 px-3 bg-secondary-subtle">
-              <>N{job.min_salary}</> - <>{job.max_salary}</>
+              <>₦{formatSalary(job.min_salary)}</> -{" "}
+              <>{formatSalary(job.max_salary)}</>
             </span>
             <span className="rounded-pill border py-1 px-3 bg-success-subtle">
-              {job.created_at}
+              {dayjs(job.created_at).fromNow()}
             </span>
           </span>
         </span>
@@ -87,7 +92,7 @@ export const ApplyModal = ({ job, onClose }) => {
                 >
                   Cancel
                 </button>
-                <button className="btn btn-secondary " disabled={loading}>
+                <button className="btn btn-primary" disabled={loading}>
                   {!loading && <span>Submit Application</span>}
                   {loading && <span className="spinner-border"></span>}
                 </button>
