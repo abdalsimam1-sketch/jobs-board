@@ -14,3 +14,8 @@ export const createApp = async (payload) => {
   const response = await api.post("/apply", payload);
   return response.data;
 };
+
+export const getApps = async () => {
+  const response = await api.get("");
+  return response.data;
+};

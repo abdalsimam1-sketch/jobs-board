@@ -25,7 +25,7 @@ const apply = async (req, res) => {
 const getApps = async (req, res) => {
   const seeker_id = req.user.id;
   const apps = await pool.query(
-    "select * from applications where seeker_id=$1",
+    "select * from applications inner join jobs on applications.job_id = jobs.id where applications.seeker_id=$1",
     [seeker_id],
   );
   res.status(200).json({ applications: apps.rows });

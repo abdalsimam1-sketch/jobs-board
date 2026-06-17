@@ -9,10 +9,13 @@ export const Navbar = ({ role }) => {
         <h1>JobBoard</h1>
       </div>
       {role === "seeker" && (
-        <div className="d-flex gap-3">
-          <span className="cursor-pointer">Home</span>
-          <span className="cursor-pointer">My applications</span>
-          <span className="cursor-pointer" onClick={() => logout(navigate)}>
+        <div className="d-flex gap-3 align-items-center">
+          <Link to="/home">Home</Link>
+          <Link to="/seeker-dashboard">My Applications</Link>
+          <span
+            className="cursor-pointer btn btn-danger"
+            onClick={() => logout(navigate)}
+          >
             Logout
           </span>
         </div>
