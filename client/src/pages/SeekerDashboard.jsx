@@ -3,6 +3,7 @@ import { getApps } from "../services/appServices";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+import { Navbar } from "../components/Navbar";
 
 export const SeekerDashboard = () => {
   const [apps, setApps] = useState([]);
@@ -38,6 +39,9 @@ export const SeekerDashboard = () => {
 
   return (
     <div className="container py-5 d-flex flex-column gap-3">
+      <section>
+        <Navbar role="seeker"></Navbar>
+      </section>
       <section className="metrics-section row g-3">
         {metrics.map((item) => (
           <div key={item.name} className="col-6 col-md-3">
