@@ -20,7 +20,7 @@ export const ApplyModal = ({ job, onClose }) => {
       });
       onClose();
     } catch (error) {
-      setError(error.response?.data?.message);
+      setError(error.response?.data.msg);
     } finally {
       setLoading(false);
     }
