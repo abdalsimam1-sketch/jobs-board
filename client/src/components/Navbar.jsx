@@ -12,22 +12,25 @@ export const Navbar = ({ role }) => {
         <div className="d-flex gap-3 align-items-center">
           <Link to="/home">Home</Link>
           <Link to="/seeker-dashboard">My Applications</Link>
-          <span
+          <button
             className="cursor-pointer btn btn-danger"
             onClick={() => logout(navigate)}
           >
             Logout
-          </span>
+          </button>
         </div>
       )}
       {role === "poster" && (
-        <div className="d-flex gap-3">
-          <span className="cursor-pointer">Dashboard</span>
-          <span className="cursor-pointer">My Jobs</span>
-          <span className="cursor-pointer">Application</span>
-          <span className="cursor-pointer" onClick={() => logout(navigate)}>
+        <div className="d-flex gap-3 align-items-center">
+          <Link to="/poster-dashboard">Dashboard</Link>
+
+          <Link>Applications</Link>
+          <button
+            className="cursor-pointer btn btn-danger"
+            onClick={() => logout(navigate)}
+          >
             Logout
-          </span>
+          </button>
         </div>
       )}
     </div>

@@ -76,10 +76,25 @@ const getAllJobs = async (req, res) => {
   res.status(200).json({ jobs: jobs.rows });
 };
 
+const getPosterJobs = async (req, res) => {
+  const poster_id = req.user.id;
+  const jobs = await pool.query(" select * from jobs where poster_id=$1", [
+    poster_id,
+  ]);
+  res.status(200).json({ jobs: jobs.rows });
+};
+
 //update job
 const updateJob = async (req, res) => {
-  const { title, description, location, type, min_salary, max_salary } =
-    req.body;
+  const {
+    company_name,
+    title,
+    description,
+    location,
+    type,
+    min_salary,
+    max_salary,
+  } = req.body;
   const id = req.params.id;
   const exsitingJob = await pool.query("select * from jobs where id=$1", [id]);
   if (exsitingJob.rows.length < 1) {
@@ -91,7 +106,7 @@ const updateJob = async (req, res) => {
   }
 
   const updatedJob = await pool.query(
-    "update jobs set title=$1 ,description=$2,location=$3,type=$4 ,min_salary=$5,max_salary=$6 where id=$7 returning *",
+    "update jobs set title=$1 ,description=$2,location=$3,type=$4 ,min_salary=$5,max_salary=$6 ,company_name=$7 where id=$8 returning *",
     [
       title || job.title,
       description || job.description,
@@ -99,6 +114,7 @@ const updateJob = async (req, res) => {
       type || job.type,
       min_salary || job.min_salary,
       max_salary || job.max_salary,
+      company_name || job.company_name,
       id,
     ],
   );
@@ -120,4 +136,4 @@ const deleteJob = async (req, res) => {
   res.status(200).json({ msg: "Job deleted successfully" });
 };
 
-module.exports = { createJob, getAllJobs, updateJob, deleteJob };
+module.exports = { createJob, getAllJobs, updateJob, deleteJob, getPosterJobs };

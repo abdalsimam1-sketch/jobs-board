@@ -19,3 +19,8 @@ export const getApps = async () => {
   const response = await api.get("");
   return response.data;
 };
+
+export const getPosterApps = async () => {
+  const response = await api.get("/review");
+  return response.data;
+};

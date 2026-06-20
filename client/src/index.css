@@ -30,7 +30,13 @@ div > a {
   overflow-y: auto;
 }
 
-.apply-modal {
+.apply-modal,
+.post-modal {
   max-width: 500px;
   width: 95%;
+}
+
+.job-table {
+  width: 100%;
+  table-layout: fixed;
 }
