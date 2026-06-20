@@ -21,3 +21,23 @@ export const getAllJobs = async (type, location, search) => {
   });
   return response.data;
 };
+
+export const createJob = async (payload) => {
+  const response = await api.post("/", payload);
+  return response.data;
+};
+
+export const getPosterJobs = async () => {
+  const response = await api.get("poster-jobs");
+  return response.data;
+};
+
+export const updateJob = async (id, payload) => {
+  const response = await api.patch(`/${id}`, payload);
+  return response.data;
+};
+
+export const deleteJob = async (id) => {
+  const response = await api.delete(`${id}`);
+  return response.data;
+};

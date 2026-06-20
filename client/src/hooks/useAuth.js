@@ -34,12 +34,20 @@ export const useAuth = () => {
         console.log(response);
         setUser({ id: response.user.id, role: response.user.role });
         localStorage.setItem("token", response.token);
-        navigate("/home");
+        if (response.user.role === "seeker") {
+          navigate("/home");
+        } else if (response.user.role === "poster") {
+          navigate("/poster-dashboard");
+        }
       } else {
         const response = await register(authForm);
         localStorage.setItem("token", response.token);
         setUser({ id: response.user.id, role: response.user.role });
-        navigate("/home");
+        if (response.user.role === "seeker") {
+          navigate("/home");
+        } else if (response.user.role === "poster") {
+          navigate("/poster-dashboard");
+        }
       }
     } catch (error) {
       setError(error.response?.data?.msg || "Something went wrong");

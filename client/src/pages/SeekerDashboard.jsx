@@ -35,13 +35,13 @@ export const SeekerDashboard = () => {
     { name: "Interview", value: interview },
     { name: "Rejected", value: rejected },
   ];
-  const bgs = [];
 
   return (
     <div className="container py-5 d-flex flex-column gap-3">
       <section>
         <Navbar role="seeker"></Navbar>
       </section>
+      <h1>Seeker Dashboard</h1>
       <section className="metrics-section row g-3">
         {metrics.map((item) => (
           <div key={item.name} className="col-6 col-md-3">

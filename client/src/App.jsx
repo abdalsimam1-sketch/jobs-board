@@ -3,6 +3,7 @@ import { Auth } from "./pages/Auth";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { SeekerDashboard } from "./pages/SeekerDashboard";
+import { PosterDashboard } from "./pages/PosterDashboard";
 
 const App = () => {
   return (
@@ -22,6 +23,14 @@ const App = () => {
           element={
             <ProtectedRoutes>
               <SeekerDashboard></SeekerDashboard>
+            </ProtectedRoutes>
+          }
+        ></Route>
+        <Route
+          path="/poster-dashboard"
+          element={
+            <ProtectedRoutes>
+              <PosterDashboard></PosterDashboard>
             </ProtectedRoutes>
           }
         ></Route>
