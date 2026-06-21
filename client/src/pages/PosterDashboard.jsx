@@ -88,57 +88,60 @@ export const PosterDashboard = () => {
             Post new job
           </button>
         </div>
-        <table className="table table-striped text-capitalize job-table">
-          <thead className="table-secondary">
-            <tr>
-              <th className="">Job Title</th>
-              <th className="d-none d-md-table-cell">Job Type</th>
-              <th className="text-capitalize  d-none d-md-table-cell">
-                Posted
-              </th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody className="align-middle">
-            {posterJobs.map((item) => (
-              <tr key={item.id} className="">
-                <td>{item.title}</td>
-                <td className="d-none d-md-table-cell">{item.type}</td>
-                <td className="text-capitalize  d-none d-md-table-cell">
-                  {dayjs(item.created_at).fromNow()}
-                </td>
-                <td>
-                  <span className="d-flex text-nowrap gap-3">
-                    <button
-                      className="bi bi-pencil-square btn btn-outline-dark"
-                      onClick={() => {
-                        setSelectedJob(item);
-                        setPostModalOpen(true);
-                      }}
-                    ></button>
-                    {deletingID !== item.id && (
+        <div className="table-responsive w-100">
+          {" "}
+          <table className="table table-striped text-capitalize job-table">
+            <thead className="table-secondary">
+              <tr>
+                <th className="">Job Title</th>
+                <th className="d-none d-md-table-cell">Job Type</th>
+                <th className="text-capitalize  d-none d-md-table-cell">
+                  Posted
+                </th>
+                <th className="text-center text-lg-start">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="align-middle">
+              {posterJobs.map((item) => (
+                <tr key={item.id} className="">
+                  <td>{item.title}</td>
+                  <td className="d-none d-md-table-cell">{item.type}</td>
+                  <td className="text-capitalize  d-none d-md-table-cell">
+                    {dayjs(item.created_at).fromNow()}
+                  </td>
+                  <td className="text-end">
+                    <span className="d-flex text-nowrap gap-3">
                       <button
-                        className="bi bi-trash btn btn-outline-danger"
+                        className="bi bi-pencil-square btn btn-outline-dark"
                         onClick={() => {
-                          handleDelete(item.id);
+                          setSelectedJob(item);
+                          setPostModalOpen(true);
                         }}
                       ></button>
-                    )}
-                    {deletingID === item.id && (
-                      <span className="btn btn-danger spinner-border"></span>
-                    )}
-                    <button
-                      className="btn btn-outline-secondary bi bi-person"
-                      onClick={() => {
-                        navigate(`/${item.id}/applicants`);
-                      }}
-                    ></button>
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                      {deletingID !== item.id && (
+                        <button
+                          className="bi bi-trash btn btn-outline-danger"
+                          onClick={() => {
+                            handleDelete(item.id);
+                          }}
+                        ></button>
+                      )}
+                      {deletingID === item.id && (
+                        <span className="btn btn-danger spinner-border"></span>
+                      )}
+                      <button
+                        className="btn btn-outline-secondary bi bi-person"
+                        onClick={() => {
+                          navigate(`/${item.id}/applicants`);
+                        }}
+                      ></button>
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
       {postModalOpen && (
         <div>
