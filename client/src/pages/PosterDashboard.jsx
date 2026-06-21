@@ -14,6 +14,7 @@ export const PosterDashboard = () => {
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [posterApps, setPosterApps] = useState([]);
+  const [deletingID, setDeletingID] = useState(null);
   const navigate = useNavigate();
 
   let jobsPosted = useMemo(() => {
@@ -41,9 +42,16 @@ export const PosterDashboard = () => {
     setPosterApps(response.apps);
   };
   const handleDelete = async (id) => {
-    const response = await deleteJob(id);
-    reviewApps();
-    viewApplications();
+    try {
+      setDeletingID(id);
+      const response = await deleteJob(id);
+      reviewApps();
+      viewApplications();
+    } catch (error) {
+      setError(error.response?.data.msg);
+    } finally {
+      setDeletingID(null);
+    }
   };
 
   useEffect(() => {
@@ -108,12 +116,17 @@ export const PosterDashboard = () => {
                         setPostModalOpen(true);
                       }}
                     ></button>
-                    <button
-                      className="bi bi-trash btn btn-outline-danger"
-                      onClick={() => {
-                        handleDelete(item.id);
-                      }}
-                    ></button>
+                    {deletingID !== item.id && (
+                      <button
+                        className="bi bi-trash btn btn-outline-danger"
+                        onClick={() => {
+                          handleDelete(item.id);
+                        }}
+                      ></button>
+                    )}
+                    {deletingID === item.id && (
+                      <span className="btn btn-danger spinner-border"></span>
+                    )}
                     <button
                       className="btn btn-outline-secondary bi bi-person"
                       onClick={() => {
