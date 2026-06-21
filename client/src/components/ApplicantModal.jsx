@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { updateApplication } from "../services/appServices";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 export const ApplicantModal = ({ applicant, onClose }) => {
   const [status, setStatus] = useState(applicant.status);
@@ -23,12 +26,16 @@ export const ApplicantModal = ({ applicant, onClose }) => {
 
           <div>
             {" "}
-            <h5>Applied On</h5>
-            <span>{applicant.created_at}</span>
+            <h5>Applied </h5>
+            <span>{dayjs(applicant.created_at).fromNow()}</span>
           </div>
           <div>
             <h5>Current Status</h5>
-            <span>{applicant.status}</span>
+            <span
+              className={`text-capitalize border rounded-pill px-3 py-1 ${applicant.status === "interview" && "bg-success-subtle"} ${applicant.status === "pending" && "bg-warning-subtle"} ${applicant.status === "rejected" && "bg-danger-subtle"}`}
+            >
+              {applicant.status}
+            </span>
           </div>
           <div>
             <h5> Cover Letter</h5>

@@ -60,7 +60,13 @@ export const JobApplicants = () => {
                       <td>{item.username}</td>
                       <td>{item.email}</td>
                       <td>{dayjs(item.created_at).fromNow()}</td>
-                      <td>{item.status}</td>
+                      <td>
+                        <span
+                          className={` text-capitalize border px-3 py-1 rounded-pill ${item.status === "interview" && "bg-success-subtle"} ${item.status === "pending" && "bg-warning-subtle"} ${item.status === "rejected" && "bg-danger-subtle"}`}
+                        >
+                          {item.status}
+                        </span>
+                      </td>
                       <td>
                         <button
                           className="btn btn-outline-secondary"
