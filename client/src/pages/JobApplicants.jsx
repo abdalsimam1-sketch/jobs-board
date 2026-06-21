@@ -23,7 +23,7 @@ export const JobApplicants = () => {
     try {
       viewApplicants(id);
     } catch (error) {}
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -44,13 +44,13 @@ export const JobApplicants = () => {
             </div>
             <section>
               <h3>Applicants</h3>
-              <table className="table table-stripped ">
+              <table className="table table-stripped text-nowrap">
                 <thead className="table-secondary">
                   <tr>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Date Applied</th>
-                    <th>Current Status</th>
+                    <th className="d-none d-md-table-cell">Email</th>
+                    <th className="d-none d-md-table-cell">Date Applied</th>
+                    <th className="d-none d-md-table-cell">Current Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -58,9 +58,11 @@ export const JobApplicants = () => {
                   {applicants.map((item, index) => (
                     <tr key={index}>
                       <td>{item.username}</td>
-                      <td>{item.email}</td>
-                      <td>{dayjs(item.created_at).fromNow()}</td>
-                      <td>
+                      <td className="d-none d-md-table-cell">{item.email}</td>
+                      <td className="d-none d-md-table-cell">
+                        {dayjs(item.created_at).fromNow()}
+                      </td>
+                      <td className="d-none d-md-table-cell">
                         <span
                           className={` text-capitalize border px-3 py-1 rounded-pill ${item.status === "interview" && "bg-success-subtle"} ${item.status === "pending" && "bg-warning-subtle"} ${item.status === "rejected" && "bg-danger-subtle"}`}
                         >
@@ -89,6 +91,7 @@ export const JobApplicants = () => {
           <ApplicantModal
             applicant={selectedApplicant}
             onClose={() => setApplicantsModalOpen(false)}
+            onUpdated={() => viewApplicants(id)}
           ></ApplicantModal>
         )}
       </div>

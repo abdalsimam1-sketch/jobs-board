@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createJob, updateJob } from "../services/jobServices";
 
-export const AddEditJobModal = ({ onClose, mode, job }) => {
+export const AddEditJobModal = ({ onClose, mode, job, refetch }) => {
   const [jobForm, setJobForm] = useState({
     title: "",
     description: "",
@@ -35,8 +35,10 @@ export const AddEditJobModal = ({ onClose, mode, job }) => {
       setLoading(true);
       if (mode === "post") {
         await createJob(jobForm);
+        refetch();
       } else if (mode === "edit") {
         await updateJob(job.id, jobForm);
+        refetch();
       }
       onClose();
     } catch (error) {
@@ -48,6 +50,16 @@ export const AddEditJobModal = ({ onClose, mode, job }) => {
   useEffect(() => {
     if (job) {
       setJobForm(job);
+    } else {
+      setJobForm({
+        title: "",
+        description: "",
+        type: "",
+        location: "",
+        min_salary: "",
+        max_salary: "",
+        company_name: "",
+      });
     }
   }, [job]);
 

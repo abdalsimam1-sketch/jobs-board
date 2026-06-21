@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-export const ApplicantModal = ({ applicant, onClose }) => {
+export const ApplicantModal = ({ applicant, onClose, onUpdated }) => {
   const [status, setStatus] = useState(applicant.status);
   const [showAlert, setShowAlert] = useState(false);
   return (
@@ -55,6 +55,7 @@ export const ApplicantModal = ({ applicant, onClose }) => {
                   updateApplication(applicant.application_id, {
                     status: "interview",
                   });
+                  onUpdated();
                   setShowAlert(true);
                   setTimeout(() => {
                     onClose();
@@ -70,6 +71,7 @@ export const ApplicantModal = ({ applicant, onClose }) => {
                   updateApplication(applicant.application_id, {
                     status: "rejected",
                   });
+                  onUpdated();
                   setShowAlert(true);
                   setTimeout(() => {
                     onClose();

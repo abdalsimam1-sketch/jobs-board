@@ -36,14 +36,16 @@ export const PosterDashboard = () => {
       setError(error.response?.data.msg);
     }
   };
-
-  const handleDelete = async (id) => {
-    const response = await deleteJob(id);
-  };
   const viewApplications = async () => {
     const response = await getPosterApps();
     setPosterApps(response.apps);
   };
+  const handleDelete = async (id) => {
+    const response = await deleteJob(id);
+    reviewApps();
+    viewApplications();
+  };
+
   useEffect(() => {
     reviewApps();
     viewApplications();
@@ -97,26 +99,28 @@ export const PosterDashboard = () => {
                 <td className="text-capitalize  d-none d-md-table-cell">
                   {dayjs(item.created_at).fromNow()}
                 </td>
-                <td className="d-flex text-nowrap gap-3">
-                  <span
-                    className="bi bi-pencil-square btn btn-outline-dark"
-                    onClick={() => {
-                      setSelectedJob(item);
-                      setPostModalOpen(true);
-                    }}
-                  ></span>
-                  <span
-                    className="bi bi-trash btn btn-outline-danger"
-                    onClick={() => {
-                      handleDelete(item.id);
-                    }}
-                  ></span>
-                  <span
-                    className="btn btn-outline-secondary bi bi-person"
-                    onClick={() => {
-                      navigate(`/${item.id}/applicants`);
-                    }}
-                  ></span>
+                <td>
+                  <span className="d-flex text-nowrap gap-3">
+                    <button
+                      className="bi bi-pencil-square btn btn-outline-dark"
+                      onClick={() => {
+                        setSelectedJob(item);
+                        setPostModalOpen(true);
+                      }}
+                    ></button>
+                    <button
+                      className="bi bi-trash btn btn-outline-danger"
+                      onClick={() => {
+                        handleDelete(item.id);
+                      }}
+                    ></button>
+                    <button
+                      className="btn btn-outline-secondary bi bi-person"
+                      onClick={() => {
+                        navigate(`/${item.id}/applicants`);
+                      }}
+                    ></button>
+                  </span>
                 </td>
               </tr>
             ))}
@@ -133,6 +137,10 @@ export const PosterDashboard = () => {
               setSelectedJob(null);
             }}
             mode={selectedJob ? "edit" : "post"}
+            refetch={() => {
+              reviewApps();
+              viewApplications();
+            }}
           ></AddEditJobModal>
         </div>
       )}
