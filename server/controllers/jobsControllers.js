@@ -121,6 +121,18 @@ const updateJob = async (req, res) => {
   res.status(200).json({ updatedJob: updatedJob.rows[0] });
 };
 
+//get job applicants
+const getJobApplicants = async (req, res) => {
+  const { id } = req.params;
+  const poster_id = req.user.id;
+  const applicants = await pool.query(
+    "select * from applications inner join users on applications.seeker_id = users.id inner join jobs on applications.job_id= jobs.id where applications.job_id = $1 and jobs.poster_id=$2",
+    [id, poster_id],
+  );
+
+  res.status(200).json({ applicants: applicants.rows });
+};
+
 //delete job
 const deleteJob = async (req, res) => {
   const id = req.params.id;
@@ -136,4 +148,11 @@ const deleteJob = async (req, res) => {
   res.status(200).json({ msg: "Job deleted successfully" });
 };
 
-module.exports = { createJob, getAllJobs, updateJob, deleteJob, getPosterJobs };
+module.exports = {
+  createJob,
+  getAllJobs,
+  updateJob,
+  deleteJob,
+  getJobApplicants,
+  getPosterJobs,
+};

@@ -1,22 +1,33 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { getPosterJobs, deleteJob } from "../services/jobServices";
+import { getPosterApps } from "../services/appServices";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { AddEditJobModal } from "../components/AddEditJobModal";
+import { useNavigate } from "react-router-dom";
 
 export const PosterDashboard = () => {
   const [posterJobs, setPosterJobs] = useState([]);
   const [error, setError] = useState("");
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [posterApps, setPosterApps] = useState([]);
+  const navigate = useNavigate();
 
   let jobsPosted = useMemo(() => {
     return posterJobs.length;
   }, [posterJobs]);
 
-  const posterMetrics = [{ name: "Jobs Posted", value: jobsPosted }];
+  let totalApplications = useMemo(() => {
+    return posterApps.length;
+  }, [posterApps]);
+
+  const posterMetrics = [
+    { name: "Total Applications", value: totalApplications },
+    { name: "Jobs Posted", value: jobsPosted },
+  ];
   const reviewApps = async () => {
     try {
       const response = await getPosterJobs();
@@ -29,8 +40,13 @@ export const PosterDashboard = () => {
   const handleDelete = async (id) => {
     const response = await deleteJob(id);
   };
+  const viewApplications = async () => {
+    const response = await getPosterApps();
+    setPosterApps(response.apps);
+  };
   useEffect(() => {
     reviewApps();
+    viewApplications();
   }, []);
 
   return (
@@ -41,7 +57,7 @@ export const PosterDashboard = () => {
       <h1>Poster Dashboard</h1>
       <section className="row g-3 poster-metrics">
         {posterMetrics.map((item, index) => (
-          <div className="col-6 col-md-4" key={index}>
+          <div className="col-12 col-md-4" key={index}>
             <div className="card p-3">
               <h1>{item.value}</h1>
               <span>{item.name}</span>
@@ -95,7 +111,12 @@ export const PosterDashboard = () => {
                       handleDelete(item.id);
                     }}
                   ></span>
-                  <span className="btn btn-outline-secondary bi bi-person"></span>
+                  <span
+                    className="btn btn-outline-secondary bi bi-person"
+                    onClick={() => {
+                      navigate(`/${item.id}/applicants`);
+                    }}
+                  ></span>
                 </td>
               </tr>
             ))}

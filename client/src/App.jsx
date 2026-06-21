@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { SeekerDashboard } from "./pages/SeekerDashboard";
 import { PosterDashboard } from "./pages/PosterDashboard";
-
+import { JobApplicants } from "./pages/JobApplicants";
 const App = () => {
   return (
     <div>
@@ -31,6 +31,14 @@ const App = () => {
           element={
             <ProtectedRoutes>
               <PosterDashboard></PosterDashboard>
+            </ProtectedRoutes>
+          }
+        ></Route>
+        <Route
+          path="/:id/applicants"
+          element={
+            <ProtectedRoutes>
+              <JobApplicants></JobApplicants>
             </ProtectedRoutes>
           }
         ></Route>
