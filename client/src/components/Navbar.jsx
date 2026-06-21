@@ -31,7 +31,6 @@ export const Navbar = ({ role }) => {
       )}
       {role === "poster" && (
         <div className="d-flex gap-3 align-items-center">
-          <Link>Applications</Link>
           <button
             className="cursor-pointer btn btn-danger"
             onClick={() => logout(navigate)}

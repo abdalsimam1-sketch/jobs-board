@@ -24,3 +24,6 @@ export const getPosterApps = async () => {
   const response = await api.get("/review");
   return response.data;
 };
+export const updateApplication = async (id, payload) => {
+  await api.patch(`/${id}`, payload);
+};

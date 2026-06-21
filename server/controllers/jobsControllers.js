@@ -126,7 +126,7 @@ const getJobApplicants = async (req, res) => {
   const { id } = req.params;
   const poster_id = req.user.id;
   const applicants = await pool.query(
-    "select * from applications inner join users on applications.seeker_id = users.id inner join jobs on applications.job_id= jobs.id where applications.job_id = $1 and jobs.poster_id=$2",
+    "select applications.id as application_id,applications.status,applications.cover_letter,applications.created_at as applied_at,users.username,users.email, jobs.title,jobs.company_name,jobs.location,jobs.type,jobs.min_salary,jobs.max_salary from applications inner join users on applications.seeker_id = users.id inner join jobs on applications.job_id = jobs.id where applications.job_id = $1 and jobs.poster_id = $2",
     [id, poster_id],
   );
 

@@ -5,10 +5,13 @@ import { Navbar } from "../components/Navbar";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+import { ApplicantModal } from "../components/ApplicantModal";
 
 export const JobApplicants = () => {
   const { id } = useParams();
   const [applicants, setApplicants] = useState([]);
+  const [applicantModalOpen, setApplicantsModalOpen] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
 
   const viewApplicants = async (id) => {
     const response = await getJobApplicants(id);
@@ -59,7 +62,13 @@ export const JobApplicants = () => {
                       <td>{dayjs(item.created_at).fromNow()}</td>
                       <td>{item.status}</td>
                       <td>
-                        <button className="btn btn-outline-secondary">
+                        <button
+                          className="btn btn-outline-secondary"
+                          onClick={() => {
+                            setSelectedApplicant(item);
+                            setApplicantsModalOpen(true);
+                          }}
+                        >
                           Review
                         </button>
                       </td>
@@ -69,6 +78,12 @@ export const JobApplicants = () => {
               </table>
             </section>
           </section>
+        )}
+        {applicantModalOpen && (
+          <ApplicantModal
+            applicant={selectedApplicant}
+            onClose={() => setApplicantsModalOpen(false)}
+          ></ApplicantModal>
         )}
       </div>
     </>
