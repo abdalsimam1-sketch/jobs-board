@@ -31,7 +31,8 @@ div > a {
 }
 
 .apply-modal,
-.post-modal {
+.post-modal,
+.applicant-modal {
   max-width: 500px;
   width: 95%;
 }

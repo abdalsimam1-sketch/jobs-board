@@ -6,12 +6,21 @@ export const Navbar = ({ role }) => {
   return (
     <div className="d-flex justify-content-between align-items-center border-bottom">
       <div>
-        <h1>JobBoard</h1>
+        {role === "seeker" ? (
+          <Link to="/home">
+            {" "}
+            <h1>JobBoard</h1>
+          </Link>
+        ) : (
+          <Link to="/poster-dashboard">
+            {" "}
+            <h1>JobBoard</h1>
+          </Link>
+        )}
       </div>
       {role === "seeker" && (
         <div className="d-flex gap-3 align-items-center">
-          <Link to="/home">Home</Link>
-          <Link to="/seeker-dashboard">My Applications</Link>
+          <Link to="/seeker-dashboard">Dashboard</Link>
           <button
             className="cursor-pointer btn btn-danger"
             onClick={() => logout(navigate)}
@@ -22,9 +31,6 @@ export const Navbar = ({ role }) => {
       )}
       {role === "poster" && (
         <div className="d-flex gap-3 align-items-center">
-          <Link to="/poster-dashboard">Dashboard</Link>
-
-          <Link>Applications</Link>
           <button
             className="cursor-pointer btn btn-danger"
             onClick={() => logout(navigate)}

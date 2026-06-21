@@ -8,6 +8,7 @@ const {
   updateJob,
   deleteJob,
   getPosterJobs,
+  getJobApplicants,
 } = require("../controllers/jobsControllers");
 
 //create job
@@ -18,6 +19,14 @@ jobsRouter.get("/", getAllJobs);
 
 //get poster's jobs
 jobsRouter.get("/poster-jobs", auth, requireRole("poster"), getPosterJobs);
+
+//get all the applicants of a specific job
+jobsRouter.get(
+  "/:id/applicants",
+  auth,
+  requireRole("poster"),
+  getJobApplicants,
+);
 
 //update job
 jobsRouter.patch("/:id", auth, requireRole("poster"), updateJob);
